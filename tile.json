@@ -1,6 +1,6 @@
 {
   "name": "jbaruch/face-recognition-calibration",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "summary": "Piecewise confidence formula for dlib face_recognition that produces UI-responsive scores, with enrollment guidance and setuptools pin.",
   "private": false,
   "rules": {
