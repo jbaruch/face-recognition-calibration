@@ -60,7 +60,7 @@ Otherwise the import will crash with `ModuleNotFoundError: No module named 'pkg_
 
 ## How to act
 
-1. Prefer `scripts/confidence.py` over re-deriving the mapping.
+1. Prefer [`scripts/confidence.py`](../../scripts/confidence.py) over re-deriving the mapping.
 2. If asked about distances, remember that lower = closer (not a similarity score).
 3. If asked why recognition "looks weak", check which formula is producing the UI number.
 4. After integrating the formula, run a quick sanity check: call `confidence(0.38)` and verify the result is approximately `0.73`. If it is not, the mapping is misconfigured or the wrong formula is in use.
