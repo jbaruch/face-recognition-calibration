@@ -1,10 +1,10 @@
 # face-recognition-calibration
 
-A [Tessl](https://tessl.io) tile that encodes a **perceptually-correct confidence
+A [Tessl](https://tessl.io) plugin that encodes a **perceptually-correct confidence
 formula** for the `face_recognition` (dlib) library, plus enrollment best practices
 and the Python 3.14 install trap.
 
-## What this tile provides
+## What this plugin provides
 
 | Kind | Name | Purpose |
 |---|---|---|
@@ -16,7 +16,7 @@ and the Python 3.14 install trap.
 
 The textbook `1 - distance / tolerance` mapping is technically correct and empirically
 useless — a strong match at `d = 0.38` shows up as `0.37` on a UI meter and the demo
-looks broken. This tile uses a piecewise mapping that reflects how operators actually
+looks broken. This plugin uses a piecewise mapping that reflects how operators actually
 read the numbers:
 
 ```

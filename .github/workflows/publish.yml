@@ -1,4 +1,4 @@
-name: Publish tile
+name: Publish plugin
 
 on:
   push:
