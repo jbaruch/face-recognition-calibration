@@ -81,6 +81,10 @@ remaining real transitions. Two filters, two layers.
 - Use `FACE_PERSIST_MISSES` tuned to ~0.8s of your effective inference rate.
 - Keep the downstream stability filter (actuator debounce) — they compose.
 
+## Reference implementation
+
+[`scripts/persistence.py`](../../scripts/persistence.py) — `FacePersistence` class with `update()`, `miss()`, and `is_persisting`. Import directly.
+
 ## Related skills
 
 - `face-recognition-confidence` — map distance to piecewise confidence.

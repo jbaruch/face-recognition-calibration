@@ -111,6 +111,10 @@ those defaults work as designed. **If you're tempted to raise `strong` to 0.40
 or 0.45, check enrollment first.** Custom threshold tuning is usually a
 workaround for a poor enrollment — fix the root cause.
 
+## Reference implementation
+
+[`scripts/enroll.py`](../../scripts/enroll.py) — `validate_capture()`, `compute_enrollment()`, `save_enrollment()`, `load_enrollment()`. Import directly.
+
 ## Python 3.14 install trap (same note as the confidence skill)
 
 `face_recognition_models` still depends on `pkg_resources`, which setuptools
