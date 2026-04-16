@@ -1,0 +1,46 @@
+{
+  "context": "Tests whether the agent implements persistence on the producer side (between detector and actuator), tunes persistence duration to ~0.8s, and correctly understands that producer-side persistence and actuator-side debounce are separate complementary layers.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "miss_streak counter",
+      "max_score": 12,
+      "description": "presence_buffer.py tracks a consecutive-miss counter (miss streak) that increments on each no-detection frame and resets on detection"
+    },
+    {
+      "name": "Persist below threshold",
+      "max_score": 12,
+      "description": "While miss_streak is below the configured threshold, presence_buffer.py returns the last observed confidence/state (not zero)"
+    },
+    {
+      "name": "Commit zero above threshold",
+      "max_score": 12,
+      "description": "Once miss_streak reaches or exceeds the threshold, presence_buffer.py returns 0 / no-presence (not the last seen state)"
+    },
+    {
+      "name": "last_conf reset on expiry",
+      "max_score": 10,
+      "description": "When the miss streak expires (reaches threshold), the stored last-seen confidence is reset to 0 so subsequent detection starts fresh"
+    },
+    {
+      "name": "Persistence ~0.8s at 10Hz",
+      "max_score": 16,
+      "description": "The max_misses / threshold value is tuned to approximately 0.8s wall-time at 10fps (i.e., a value of 7–9 misses, not dramatically higher or lower)"
+    },
+    {
+      "name": "Producer-side placement",
+      "max_score": 14,
+      "description": "architecture_notes.md or code comments describe the buffer as sitting on the producer side (between detector output and downstream consumer/actuator input)"
+    },
+    {
+      "name": "Separate actuator debounce layer",
+      "max_score": 14,
+      "description": "architecture_notes.md explicitly states that actuator-side stability filtering / debounce is a SEPARATE layer that should still be kept — the buffer does NOT replace it"
+    },
+    {
+      "name": "Reset streak on detection",
+      "max_score": 10,
+      "description": "When a face IS detected, miss_streak is reset to zero (not accumulated)"
+    }
+  ]
+}

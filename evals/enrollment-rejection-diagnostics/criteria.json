@@ -1,0 +1,46 @@
+{
+  "context": "Tests whether the agent applies the correct blur threshold (40, not 80) for pale-skin-safe capture validation, targets the correct intra-class distance range, uses pickle for enrollment persistence, and avoids re-enrolling from raw images in the load path.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Blur threshold is 40",
+      "max_score": 16,
+      "description": "The Laplacian variance rejection threshold used in frame validation is 40 (not 80, not 100, not 150)"
+    },
+    {
+      "name": "Blur threshold not 80",
+      "max_score": 10,
+      "description": "Does NOT use 80 as the blur threshold (80 is explicitly the wrong value that causes false rejections for pale skin)"
+    },
+    {
+      "name": "Intra-class mean target lower bound",
+      "max_score": 12,
+      "description": "Pre-publish validation checks or design_notes.md states intra-class distance mean target minimum of 0.25 (not lower)"
+    },
+    {
+      "name": "Intra-class mean target upper bound",
+      "max_score": 12,
+      "description": "Pre-publish validation checks or design_notes.md states intra-class distance mean target maximum of 0.40 (not higher)"
+    },
+    {
+      "name": "Intra-class max check",
+      "max_score": 10,
+      "description": "Pre-publish validation checks or design_notes.md flags intra-class max distance > 0.50 as an outlier signal"
+    },
+    {
+      "name": "Pickle for enrollment storage",
+      "max_score": 14,
+      "description": "Enrollment is saved using pickle (not JSON, not numpy .npy, not CSV) — design_notes.md or code uses pickle.dump/pickle.load"
+    },
+    {
+      "name": "No re-enrollment in load path",
+      "max_score": 12,
+      "description": "The production load path loads from the pickle file directly — it does NOT re-compute encodings from JPEG/image files at load time"
+    },
+    {
+      "name": "Pale skin rationale",
+      "max_score": 14,
+      "description": "design_notes.md mentions that pale or fair skin produces lower Laplacian variance on sharp photos, justifying the lower blur threshold"
+    }
+  ]
+}

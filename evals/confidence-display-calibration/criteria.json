@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether the agent implements the piecewise confidence mapping (not the naive formula) and validates it with the canonical sanity check. The retail scenario motivates why the formula matters but does not name the correct formula.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Piecewise clamp at 0.30",
+      "max_score": 15,
+      "description": "confidence_module.py returns exactly 1.0 for any distance <= 0.30 (verified in results.txt or source)"
+    },
+    {
+      "name": "Piecewise clamp at 0.60",
+      "max_score": 15,
+      "description": "confidence_module.py returns exactly 0.0 for any distance >= 0.60 (verified in results.txt or source)"
+    },
+    {
+      "name": "Linear mid-range formula",
+      "max_score": 20,
+      "description": "The formula used in the 0.30–0.60 range is (0.60 - distance) / 0.30, NOT 1 - distance/tolerance or any other expression"
+    },
+    {
+      "name": "No naive formula",
+      "max_score": 20,
+      "description": "Does NOT use `1 - distance / tolerance` (or equivalent `1 - d / 0.6`) as the confidence formula"
+    },
+    {
+      "name": "Sanity check value at 0.38",
+      "max_score": 20,
+      "description": "results.txt shows confidence at distance 0.38 producing a value of approximately 0.73 (between 0.72 and 0.74)"
+    },
+    {
+      "name": "Threshold constants correct",
+      "max_score": 10,
+      "description": "The lower clamp threshold is 0.30 and upper clamp threshold is 0.60 — not shifted to 0.40/0.45 or any other values"
+    }
+  ]
+}
