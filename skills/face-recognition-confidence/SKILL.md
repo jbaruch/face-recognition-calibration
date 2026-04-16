@@ -32,19 +32,17 @@ def confidence(distance: float) -> float:
 A strong match at d=0.38 gives 0.73 — feels right on a meter. The naive
 `1 - distance/tolerance` at the same distance gives 0.37 and the demo looks broken.
 
-## Enrollment
+## When defaults don't fit: check enrollment before tuning
 
-- 3–7 well-lit photos per person.
-- Compute 128-d encoding for each; **average** them into a single enrolled vector.
-- Pickle the resulting dict `{name: np.ndarray(128)}` so the stage machine doesn't
-  recompute on every boot.
-- **Validate after encoding**: confirm each encoding array has shape `(128,)` and
-  contains no `NaN` values (`np.isnan(encoding).any()` should be `False`). If
-  `face_recognition.face_encodings()` returns an empty list for a photo, that image
-  had no detectable face — discard it and substitute another.
-- **Validate after averaging**: check that the stored vector norm is in the range
-  0.9 – 1.1 (`np.linalg.norm(avg_encoding)`). A vector far outside this range
-  indicates a bad source encoding slipped through.
+If your runtime distances consistently land above 0.40 on what should be strong
+matches, the formula isn't the problem — **your enrollment is**. Enrollment
+taken at different framing/lighting/camera than runtime produces a loose cloud,
+and distances inflate. See the `face-recognition-enrollment` skill in this
+plugin for a quality checklist and diagnostic (intra-class distance target
+0.25–0.40 mean, face coverage 60–75%, Laplacian blur ≥ 150).
+
+Do not raise `strong` to 0.40 or 0.45 as a workaround for bad enrollment. You
+will mask the real problem and break across subjects.
 
 ## Python 3.14 install trap
 

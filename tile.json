@@ -1,7 +1,7 @@
 {
   "name": "jbaruch/face-recognition-calibration",
   "version": "0.1.2",
-  "summary": "Piecewise confidence formula for dlib face_recognition that produces UI-responsive scores, with enrollment guidance and setuptools pin.",
+  "summary": "Production-grade dlib face_recognition toolkit: piecewise confidence formula, enrollment quality diagnostics, and producer-side persistence for flicker suppression.",
   "private": false,
   "rules": {
     "face-recognition-calibration-rules": {
@@ -11,6 +11,12 @@
   "skills": {
     "face-recognition-confidence": {
       "path": "skills/face-recognition-confidence/SKILL.md"
+    },
+    "face-recognition-enrollment": {
+      "path": "skills/face-recognition-enrollment/SKILL.md"
+    },
+    "face-recognition-persistence": {
+      "path": "skills/face-recognition-persistence/SKILL.md"
     }
   }
 }
