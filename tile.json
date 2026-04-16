@@ -1,6 +1,6 @@
 {
   "name": "jbaruch/face-recognition-calibration",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "summary": "Production-grade dlib face_recognition toolkit: piecewise confidence formula, enrollment quality diagnostics, and producer-side persistence for flicker suppression.",
   "private": false,
   "rules": {
