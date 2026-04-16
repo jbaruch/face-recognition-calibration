@@ -70,7 +70,11 @@ Enforce validation at the moment of capture — better than cleaning up after:
 
 - Reject frames where **no face is detected** (subject not in view).
 - Reject frames where **face_h < 400 px** on a 720p capture (coverage too low).
-- Reject frames where **Laplacian variance of the face crop < 80** (too blurry).
+- Reject frames where **Laplacian variance of the face crop < threshold** (too blurry).
+  - **Threshold = 40** (not 80). Pale/fair skin produces low Laplacian variance
+    (40–80) on perfectly sharp photos because there are fewer skin-texture edges.
+    A threshold of 80 causes false rejections on pale subjects. 40 catches
+    genuinely blurry frames without penalizing skin tone.
 - Re-pose and try again.
 
 ## Averaging encodings
@@ -81,7 +85,22 @@ Per person, compute the mean of all accepted encodings:
 enrolled[name] = np.mean(np.stack(vecs), axis=0)
 ```
 
-Pickle the result; don't re-enroll on every boot.
+## Pre-pickle the enrollment
+
+```python
+import pickle
+pickle.dump(enrolled, open("faces/enrolled.pkl", "wb"))
+```
+
+On subsequent runs (and in sub-agent workers), load the pickle:
+
+```python
+enrolled = pickle.load(open("faces/enrolled.pkl", "rb"))
+```
+
+This saves 8–10 seconds of JPEG loading + face_encodings per startup. Critical
+for sub-agent architectures where each worker would otherwise re-enroll from
+scratch. **Never re-enroll from JPEG files in a latency-sensitive path.**
 
 ## When enrollment is good, don't tune the formula
 
