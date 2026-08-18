@@ -1,19 +1,22 @@
 name: Publish plugin
 
+# Thin caller for the canonical fleet publish pipeline
+# (jbaruch/coding-policy#206). Display name preserved for run-name watchers.
+# See docs/fleet-publish-setup.md in jbaruch/coding-policy for the contract.
+
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
-  contents: write
+  id-token: write
+  contents: write        # smart-publish pushes the auto-bump commit to the protected branch
   pull-requests: write
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: tesslio/patch-version-publish@v1
-        with:
-          token: ${{ secrets.TESSL_TOKEN }}
+    uses: jbaruch/coding-policy/.github/workflows/publish-plugin.yml@1fca7dde58fbe334e04ecd0e310f37307c141c42
+    secrets:
+      TESSL_TOKEN: ${{ secrets.TESSL_TOKEN }}

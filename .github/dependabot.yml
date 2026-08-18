@@ -1,0 +1,13 @@
+# Renewal mechanism for the pinned publish-plugin.yml@<sha> reference, per
+# jbaruch/coding-policy: dependency-management (every pinned dependency needs an
+# automated renewal mechanism). Dependabot opens a weekly PR when a newer
+# coding-policy commit is tagged as a newer action version; that PR's CI gate is
+# the acceptance check for the bump.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore(ci)"
